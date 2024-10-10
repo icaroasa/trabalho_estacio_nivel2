@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script type="text/javascript" src="ordenando.js"></script>
+    <title>Document</title>
+</head>
+<body class="container">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link navbar-brand active" href="index.html">Ordenando <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link navbar-brand" href="receitas.html">Receitas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link navbar-brand" href="usuarios.html">Usuarios</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <fieldset>
+        <legend>Ordenando Valores</legend>
+        <label for="valor">Valor</label>
+        <input type="number" id="valor">
+        <button onclick="add()">Adicionar</button>
+        <hr>
+        <select name="metodoSort" id="metodoSort">
+            <option value="bubble" selected>Bubble Sort</option>
+            <option value="selection">Selection Sort</option>
+            <option value="quick">Quick Sort</option>
+        </select>
+        <button onclick="ordenar()">Ordenar</button>
+        <button onclick="misturar()">Misturar</button>
+        <hr>
+        <ul id="valores"></ul>
+    </fieldset>
+    <script type="text/javascript">
+
+        function add(){
+            let valor = document.getElementById("valor").value;
+            let valores = document.getElementById("valores");
+            let novoValor = document.createElement('li');
+            novoValor.textContent = valor;
+            console.log(typeof novoValor);
+            valores.appendChild(novoValor);
+            document.getElementById('valor').value = '';
+        }
+
+        function ordenar(){
+            let valores = document.getElementById("valores");
+            let listaValores = [];
+
+            for(valor of valores.children){
+                listaValores.push(parseInt(valor.textContent));
+            }
+
+            console.log(listaValores);
+            let metodoSort = document.getElementById("metodoSort").selectedIndex;
+            switch(metodoSort){
+                case 0:
+                    bubbleSort(listaValores);
+                    break;
+                case 1:
+                    selectionSort(listaValores);
+                    break;
+                case 2:
+                    quickSort(listaValores, 0, (listaValores.length-1));
+                    break;
+            }
+
+            for(indice in listaValores){
+                valores.children[indice].textContent = listaValores[indice];
+            }
+
+            console.log(listaValores);
+        }
+
+        function misturar(){
+            let valores = document.getElementById("valores");
+            let listaValores = [];
+
+            for(valor of valores.children){
+                listaValores.push(parseInt(valor.textContent));
+            }
+
+            shuffle(listaValores, (listaValores.length/2));
+
+            for(indice in listaValores){
+                valores.children[indice].textContent = listaValores[indice];
+            }
+        }
+
+    </script>
+</body>
+</html>
